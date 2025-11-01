@@ -8,6 +8,8 @@ rule process_data:
         orders="data/raw/orders.csv"
     output:
         "data/processed/analytics.sqlite"
+    # log:
+    #     "customed_logs/process_data_{timestamp}.log"
     shell:
         """
         python scripts/process_data.py \

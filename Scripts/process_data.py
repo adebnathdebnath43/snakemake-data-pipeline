@@ -3,20 +3,34 @@ import pandas as pd
 import sqlite3
 import os
 
-def main(users_csv, orders_csv, output_db):
+def main(users_csv, orders_csv, output_db,state_file="state/max_input_order.txt"):
     # Create output directory if needed
     os.makedirs(os.path.dirname(output_db), exist_ok=True)
-    
+    os.makedirs(os.path.dirname(state_file), exist_ok=True)
+
     # Read CSVs
     users_df = pd.read_csv(users_csv)
     orders_df = pd.read_csv(orders_csv)
+    last_order_id = 0
+    if os.path.exists(state_file):
+        with open(state_file, 'r') as f:
+            last_order_id = int(f.read().strip())
     
     # Inner join on user_id
     merged_df = pd.merge(users_df, orders_df, on='user_id', how='inner')
-    
+
+    #filter new orders only
+    merged_df=merged_df[merged_df['order_id']>last_order_id].copy()
+
     # Write to SQLite table 'user_orders'
     conn = sqlite3.connect(output_db)
-    merged_df.to_sql('user_orders', conn, if_exists='replace', index=False)
+    merged_df.to_sql('user_orders', conn, if_exists='append', index=False)
+   
+    # Update state file with the last processed order_id
+    last_order_id = merged_df['order_id'].max()
+    with open(state_file, 'w') as f:
+        f.write(str(last_order_id))   
+
     conn.close()
     
     print(f"Success! Merged {len(merged_df)} rows into {output_db}")
