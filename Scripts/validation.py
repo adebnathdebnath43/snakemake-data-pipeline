@@ -5,7 +5,7 @@ import os
 
 def validate_no_negative_amount(orders_df):
     if (orders_df["amount"] < 0).any():
-        print("FAILED: Negative amount found in orders.csv")
+        print("FAILED: Negative amount found in orders.csv", orders_df[orders_df["amount"] < 0])
         return False
     print("PASSED: No negative amounts")
     return True
@@ -50,7 +50,7 @@ def main(users_csv, orders_csv, state_folder="state"):
     else:
         print("All validation passed. Proceeding...")
 
-if __name__ == "__main__":
+#if __name__ == "__main__":
     if len(sys.argv) != 3:
         print("Usage: validation.py <users.csv> <orders.csv>")
         sys.exit(1)

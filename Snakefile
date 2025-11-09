@@ -1,12 +1,15 @@
 # Snakefile
-from datetime import datetime
+from datetime import datetime, date
 import os
 
 # Create state folder
 #os.makedirs("state", exist_ok=True)
 
+today = date.today().strftime("%Y-%m-%d")
+
 # rule all:
 #     input:
+    #"data/processed/analytics_" + today + ".sqlite"
 #         "data/processed/analytics.sqlite"
 
 # rule validate_input:
@@ -24,7 +27,7 @@ import os
 #         ])
 #         if result.returncode != 0:
 #             sys.exit(1)
-rule process_data:
+rule all:
     input:
         users="data/raw/users.csv",
         orders="data/raw/orders.csv"
