@@ -36,7 +36,7 @@ jobs:
           python -m snakemake --cores 1
 
       - name: Upload processed DB
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: analytics-db
           path: Data/processed/*.sqlite
