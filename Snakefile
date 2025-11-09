@@ -29,14 +29,14 @@ today = date.today().strftime("%Y-%m-%d")
 #             sys.exit(1)
 rule all:
     input:
-        users="data/raw/users.csv",
-        orders="data/raw/orders.csv"
+        users="Data/Raw/users.csv",
+        orders="Data/Raw/orders.csv"
         #flag="state/validation_passed.flag"  # ← DEPENDS ON VALIDATION
     output:
-        db="data/processed/analytics.sqlite"
+        db="Data/processed/analytics.sqlite"
     shell:
         """
-        python scripts/process_data.py \
+        python Scripts/process_data.py \
             --users_csv {input.users} \
             --orders_csv {input.orders} \
             --output_db {output.db}
