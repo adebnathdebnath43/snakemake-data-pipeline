@@ -21,6 +21,7 @@ def main(users_csv, orders_csv, output_db):
     #         f.write("Data validation failed: Negative amounts found in orders.csv\n"+ orders_df[orders_df["amount"] < 0].to_string() )
         #print("Data validation failed. Exiting process.")
         #return
+    
     # make the last order as 0 from non existing state file
     # last_order_id = 0
     # if os.path.exists(state_file):

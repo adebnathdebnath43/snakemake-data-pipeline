@@ -29,6 +29,10 @@ jobs:
       - name: List changed files
         run: |
           echo "Changed files:" && git --no-pager diff --name-only ${{ github.event.before }} ${{ github.sha }} | sed -n '1,200p'
+      
+      - name: Remove existing processed DB (force rebuild)
+        run: |
+          rm -f Data/processed/*.sqlite || true
 
       - name: Run Snakemake pipeline
         run: |
