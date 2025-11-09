@@ -46,3 +46,9 @@ jobs:
         with:
           name: analytics-db
           path: Data/processed/*.sqlite
+
+      - name: Query SQLite DB (using sqlite3 CLI)
+        run: |
+          sudo apt-get update && sudo apt-get install -y sqlite3
+          sqlite3 Data/processed/analytics.sqlite "SELECT * FROM user_orders;" > user_orders.txt
+          cat user_orders.txt
